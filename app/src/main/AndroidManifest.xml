@@ -18,6 +18,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Dictionary"
+            android:label="@string/title_activity_dictionary"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Practise"
+            android:label="@string/title_activity_practise"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Exercises"
+            android:label="@string/title_activity_exercises"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Settings"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>
