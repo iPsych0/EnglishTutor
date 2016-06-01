@@ -12,4 +12,54 @@
     tools:context="mprog.nl.programmeerprojectdaniel.Dictionary"
     tools:showIn="@layout/app_bar_dictionary">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="44sp"
+        android:text="@string/translateRequest"
+        android:id="@+id/translateRequest"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true" />
+
+    <android.inputmethodservice.ExtractEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/translationInput"
+        android:hint="@string/translateHint"
+        android:layout_below="@+id/translateRequest"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/languageSpinner"
+        android:layout_below="@+id/translationInput"
+        android:entries="@array/languages"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="Translation of word X"
+        android:textAlignment="center"
+        android:id="@+id/translationResult"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="Example of word X"
+        android:textAlignment="center"
+        android:id="@+id/translationExample"
+        android:visibility="visible"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/translationResult"
+        android:layout_alignLeft="@+id/translationResult"
+        android:layout_alignStart="@+id/translationResult" />
+
 </RelativeLayout>

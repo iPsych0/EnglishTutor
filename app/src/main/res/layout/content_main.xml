@@ -9,12 +9,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="mprog.nl.programmeerprojectdaniel.MainActivity">
+    tools:context="mprog.nl.programmeerprojectdaniel.MainActivity"
+    tools:showIn="@layout/app_bar_main">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:textSize="44sp"
         android:text="@string/WOTD"
         android:id="@+id/wordText"
@@ -24,7 +24,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:textSize="32sp"
         android:text="@string/translationHome"
         android:id="@+id/translationText"
@@ -36,12 +35,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:textSize="32sp"
         android:text="@string/exampleHome"
         android:id="@+id/exampleText"
         android:textStyle="bold"
-        android:layout_marginTop="117dp"
+        android:layout_marginTop="96dp"
         android:layout_below="@+id/translationText"
         android:layout_centerHorizontal="true" />
 

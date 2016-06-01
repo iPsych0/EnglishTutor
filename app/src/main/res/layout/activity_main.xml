@@ -8,6 +8,37 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="44sp"
+        android:text="@string/WOTD"
+        android:id="@+id/wordText"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:text="@string/translationHome"
+        android:id="@+id/translationText"
+        android:textStyle="bold"
+        android:layout_marginTop="133dp"
+        android:layout_below="@+id/wordText"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:text="@string/exampleHome"
+        android:id="@+id/exampleText"
+        android:textStyle="bold"
+        android:layout_marginTop="117dp"
+        android:layout_below="@+id/translationText"
+        android:layout_centerHorizontal="true" />
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
