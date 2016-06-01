@@ -7,6 +7,9 @@
     <string name="Dictionary">Dictionary</string>
     <string name="Practise">Practise</string>
     <string name="Settings">Settings</string>
+    <string name="WOTD">Word of the day</string>
+    <string name="translationHome">Translation:</string>
+    <string name="exampleHome">Example:</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_dictionary">Dictionary</string>
     <string name="title_activity_practise">Practise</string>
