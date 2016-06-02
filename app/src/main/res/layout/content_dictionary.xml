@@ -21,7 +21,7 @@
         android:textStyle="bold"
         android:layout_centerHorizontal="true" />
 
-    <android.inputmethodservice.ExtractEditText
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/translationInput"
@@ -34,9 +34,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/languageSpinner"
-        android:layout_below="@+id/translationInput"
         android:entries="@array/languages"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/translationResult"
+        android:layout_alignRight="@+id/translateButton"
+        android:layout_alignEnd="@+id/translateButton"
+        android:layout_alignLeft="@+id/translateButton"
+        android:layout_alignStart="@+id/translateButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,5 +64,15 @@
         android:layout_below="@+id/translationResult"
         android:layout_alignLeft="@+id/translationResult"
         android:layout_alignStart="@+id/translationResult" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Translate"
+        android:id="@+id/translateButton"
+        android:layout_below="@+id/translationInput"
+        android:onClick="Translate"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
