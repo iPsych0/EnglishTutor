@@ -6,7 +6,7 @@
 
 ## Diagram of classes and inheritance
 
-![classdiagram](https://cloud.githubusercontent.com/assets/18482747/15674801/16555e92-273f-11e6-92af-2b0034415041.png)
+![classdiagram](https://cloud.githubusercontent.com/assets/18482747/15744124/69b7ffea-28ca-11e6-844a-88ab2e3ed61a.png)
 
 
 ## API's and frameworks
