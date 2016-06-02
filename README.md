@@ -10,7 +10,7 @@ This app will aid Dutch learners of English as a foreign language in their learn
 
 ## Features of the app
 
-Users are can look up words in a dictionary. This will aid them throughout their learning process, not exclusively to vocabulary, but also to help understand texts better in case the user does not understand a given word. The Google Translate API will be used as back-end functionality for this feature.
+Users are can look up words in a dictionary. This will aid them throughout their learning process, not exclusively to vocabulary, but also to help understand texts better in case the user does not understand a given word. The Yandex Dictionary API will be used as back-end functionality for this feature.
 Another feature of the app will be that the user will be presented with a “word of the day”, where a random word from the dictionary will be selected and presented to the user every 24 hours. While this has no active contribution to the user’s learning process, it contains a surprise element and brings out the user’s curiosity. 
 Finally, one of the features that will be available in the app is a program where users can enter the words they need to learn and the correct translation. The app will then test the user’s vocabulary based on the given input. The user will receive a score based on correct performance. 
 
@@ -18,7 +18,7 @@ Finally, one of the features that will be available in the app is a program wher
 
 For this app, the following two API’s will be used:
 https://www.wordsapi.com/ and 
-https://cloud.google.com/translate/ .
+https://tech.yandex.com/dictionary/doc/dg/reference/lookup-docpage/ .
 Both API’s respond with JSON code which I can extract the information from that I want my users to be presented. The users will then be given the result of the query in a pretty-printed, readable fashion. 
 
 ## The app decomposed
