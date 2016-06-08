@@ -1,5 +1,6 @@
 package mprog.nl.programmeerprojectdaniel;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 public class Practise extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    DBHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,14 +28,7 @@ public class Practise extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "TODO: Add interface to add words to database", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        dbHelper = new DBHelper(this, null, null, 1);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -42,6 +38,17 @@ public class Practise extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addButton);
+        assert fab != null;
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newList = new Intent(view.getContext(), NewList.class);
+                newList.putExtra("newList", view.getId());
+                startActivity(newList);
+            }
+        });
     }
 
     @Override

@@ -18,25 +18,22 @@ import java.net.URL;
 public class HTTPRequestHelper {
 
     // Yandex Dictionary API URL and API key
-    private static final String url_dictionary1 = "https://dictionary.yandex.net/api/v1/dicservice.json/lookup";
-    private static final String url_dictionary2 = "?key=dict.1.1.20160602T095140Z.4092fa3a976c0a40.a0925400b100b04e96fa26c6bec99b76e2ee292e";
+    private static final String api_endpoint = "https://dictionary.yandex.net/api/v1/dicservice.json/lookup";
+    private static final String api_key = "?key=dict.1.1.20160602T095140Z.4092fa3a976c0a40.a0925400b100b04e96fa26c6bec99b76e2ee292e";
 
     // Method to download from server
     protected static synchronized String downloadFromServer(String...params){
         // Declare return string for dictionary request
         String result_dictionary = "";
 
-        // Declare return string for word of the day request
-        String result_wotd = "";
-
         // Chosen language from argument
         String chosenLanguage = "en-nl";
 
         // Chosen text from argument
-        String chosenText = params[0];
+        String chosenWord = params[0];
 
         // Complete string url for dictionary translations
-        String dictionaryUrl = url_dictionary1 + url_dictionary2 + "&lang=" + chosenLanguage + "&text=" + chosenText;
+        String dictionaryUrl = api_endpoint + api_key + "&lang=" + chosenLanguage + "&text=" + chosenWord;
 
         // Turn string into url
         URL url = null;

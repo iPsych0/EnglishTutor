@@ -9,6 +9,12 @@
     <string name="Settings">Settings</string>
     <string name="listTitle">Your word lists</string>
     <string name="WOTD">Word of the day</string>
+    <string name="addDutchHint">Add Dutch word</string>
+    <string name="addListTitle">Add name of list</string>
+    <string name="addButton">Add</string>
+    <string name="doneButton">Done</string>
+    <string name="addEnglishHint">Add English word</string>
+    <string name="databaseTitle">Create your own word list</string>
     <string name="translationHome">Translation:</string>
     <string name="exampleHome">Example:</string>
     <string name="action_settings">Settings</string>

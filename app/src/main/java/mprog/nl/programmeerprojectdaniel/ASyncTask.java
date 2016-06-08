@@ -47,8 +47,11 @@ public class ASyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result_dictionary) {
         super.onPostExecute(result_dictionary);
-        //if(result_dictionary.length() == 0){
+        if(result_dictionary.equals("{\"head\":{},\"def\":[]}")){
+            Toast.makeText(context, "Word not found", Toast.LENGTH_SHORT).show();
+        }
+        else{
             Toast.makeText(context, result_dictionary, Toast.LENGTH_SHORT).show();
-        //}
+        }
     }
 }

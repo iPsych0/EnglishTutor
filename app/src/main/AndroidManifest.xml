@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mprog.nl.programmeerprojectdaniel">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -34,7 +34,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Settings"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".NewList" />
+        <activity android:name=".AddWords"></activity>
     </application>
 
 </manifest>
