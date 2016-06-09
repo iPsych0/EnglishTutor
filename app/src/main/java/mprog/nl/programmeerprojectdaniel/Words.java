@@ -11,21 +11,21 @@ public class Words {
     private int _listId;
     private String _dutchWord;
     private String _englishWord;
-    private ArrayList<Words> wordsArrayList = new ArrayList<>();
+    private String _listName;
 
     public Words(){
 
     }
 
-    public Words(String dutchWord, String englishWord, ArrayList<Words> wordsArrayList) {
+    public Words(String dutchWord, String englishWord, String listName) {
         this._dutchWord = dutchWord;
         this._englishWord = englishWord;
-        this.wordsArrayList = wordsArrayList;
+        this._listName = listName;
     }
 
-    public ArrayList<Words> getWordsArrayList() {
-        return this.wordsArrayList;
-    }
+    public String get_listName() { return _listName; }
+
+    public void set_listName(String listName){ this._listName = listName; }
 
     public int get_listId(){
         return _listId;

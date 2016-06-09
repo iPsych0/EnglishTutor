@@ -74,15 +74,12 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "You are already at Home", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.dictionaryButton) {
             Intent dictionary = new Intent(this, Dictionary.class);
-            dictionary.putExtra("dictionary", id);
             startActivity(dictionary);
         } else if (id == R.id.practiseButton) {
             Intent practise = new Intent(this, Practise.class);
-            practise.putExtra("practise", id);
             startActivity(practise);
         } else if (id == R.id.settingsButton) {
             Intent settings = new Intent(this, Settings.class);
-            settings.putExtra("settings", id);
             startActivity(settings);
         }
 

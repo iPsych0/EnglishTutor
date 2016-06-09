@@ -14,12 +14,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Practise extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     DBHelper dbHelper;
+    ListView wordList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +37,21 @@ public class Practise extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        final String listName = extras.getString("name");
+        */
+
+        wordList = (ListView)findViewById(R.id.wordList);
         dbHelper = new DBHelper(this, null, null, 1);
+
+
+        if(dbHelper.getListLists() != null) {
+            ArrayList<String> wordsArrayList = dbHelper.getListLists();
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, wordsArrayList);
+            wordList.setAdapter(adapter);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
