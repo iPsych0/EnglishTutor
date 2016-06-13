@@ -46,12 +46,12 @@ public class Practise extends AppCompatActivity
         wordList = (ListView)findViewById(R.id.wordList);
         dbHelper = new DBHelper(this, null, null, 1);
 
+        System.out.println(dbHelper.checkLists());
 
-        if(dbHelper.getListLists() != null) {
-            ArrayList<String> wordsArrayList = dbHelper.getListLists();
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, wordsArrayList);
-            wordList.setAdapter(adapter);
-        }
+
+        ArrayList<String> listsArrayList = dbHelper.checkLists();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listsArrayList);
+        wordList.setAdapter(arrayAdapter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

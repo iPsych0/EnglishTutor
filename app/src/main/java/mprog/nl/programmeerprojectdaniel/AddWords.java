@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddWords extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class AddWords extends AppCompatActivity {
 
         context = this;
         dbHelper = new DBHelper(context, null, null, 1);
-        dbHelper.checkLists(listName);
+        dbHelper.checkLists();
 
         dutchWordInput = (EditText)findViewById(R.id.addDutch);
         englishWordInput = (EditText)findViewById(R.id.addEnglish);
@@ -41,9 +42,14 @@ public class AddWords extends AppCompatActivity {
                 String dutchWord = dutchWordInput.getText().toString();
                 String englishWord = englishWordInput.getText().toString();
 
+                //TODO add Toast
                 dbHelper.addWords(dutchWord, englishWord, listName);
+                Toast.makeText(AddWords.this, "Words " + dutchWord + " and " + englishWord + " added to " + listName, Toast.LENGTH_SHORT).show();
                 dutchWordInput.setText("");
                 englishWordInput.setText("");
+                System.out.println(dbHelper.checkLists());
+                System.out.println(dbHelper.getListLists());
+
             }
         });
         doneButton = (Button)findViewById(R.id.doneButton);
@@ -51,12 +57,6 @@ public class AddWords extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent practiseIntent = new Intent(view.getContext(), Practise.class);
-                practiseIntent.putExtra("practise", view.getId());
-
-                Bundle bundle = new Bundle();
-                bundle.putString("name", listName);
-
-                practiseIntent.putExtras(bundle);
                 startActivity(practiseIntent);
                 finish();
             }

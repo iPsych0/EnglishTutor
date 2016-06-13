@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Words {
 
     private int _id;
-    private int _listId;
     private String _dutchWord;
     private String _englishWord;
     private String _listName;
@@ -17,23 +16,17 @@ public class Words {
 
     }
 
-    public Words(String dutchWord, String englishWord, String listName) {
+    public Words(int _id, String listName, String dutchWord, String englishWord) {
+        this._id = _id;
+        this._listName = listName;
         this._dutchWord = dutchWord;
         this._englishWord = englishWord;
-        this._listName = listName;
     }
 
     public String get_listName() { return _listName; }
 
     public void set_listName(String listName){ this._listName = listName; }
 
-    public int get_listId(){
-        return _listId;
-    }
-
-    public void set_listId(int _listId){
-        this._listId = _listId;
-    }
 
     public int get_id() {
         return _id;

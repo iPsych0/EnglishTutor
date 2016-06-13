@@ -28,26 +28,26 @@ public class NewList extends AppCompatActivity {
             public void onClick(View view){
 
                 // TODO add adapter to listview!
-                String listName = addListName.getText().toString();
-                if(!listName.matches("[a-zA-Z1-9\\s]+")){
-                    addListName.setText("");
+                String listNameInput = addListName.getText().toString();
+                //if(!listNameInput.matches("[a-zA-Z1-9\\s]+")){
+                  //  addListName.setText("");
+                //}
+                System.out.println(dbHelper.checkLists());
+                Toast.makeText(NewList.this, "List: " + listNameInput + " is created.", Toast.LENGTH_SHORT).show();
+
+                if (dbHelper.checkLists().contains(listNameInput)){
+                    Toast.makeText(NewList.this, "This list already exists", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    dbHelper.checkLists(listName);
-                    //if (dbHelper.checkLists(listName).contentEquals(listName)){
-                    //    Toast.makeText(NewList.this, "This list already exists", Toast.LENGTH_SHORT).show();
-                    //}
-                    //else {
                     Intent addWordsIntent = new Intent(view.getContext(), AddWords.class);
                     addWordsIntent.putExtra("addWords", view.getId());
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("name", listName);
+                    bundle.putString("name", listNameInput);
 
                     addWordsIntent.putExtras(bundle);
                     startActivity(addWordsIntent);
                     finish();
-                    //}
                 }
                 }
             });

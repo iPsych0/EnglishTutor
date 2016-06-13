@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /* Student name: Daniel Oliemans
  * Student number: 11188669
  * Universiteit van Amsterdam
@@ -51,7 +54,16 @@ public class ASyncTask extends AsyncTask<String, Integer, String> {
             Toast.makeText(context, "Word not found", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(context, result_dictionary, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, result_dictionary, Toast.LENGTH_SHORT).show();  /*
+            JSONObject obj = new JSONObject(" .... ");
+            String pageName = obj.getJSONObject("pageInfo").getString("pageName");
+
+            JSONArray arr = obj.getJSONArray("posts");
+            for (int i = 0; i < arr.length(); i++)
+            {
+                String post_id = arr.getJSONObject(i).getString("post_id");
+                ......
+            }*/
         }
     }
 }
