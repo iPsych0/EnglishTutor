@@ -4,6 +4,7 @@ package mprog.nl.programmeerprojectdaniel;
  * Created by Jasper school on 31-5-2016.
  */
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
@@ -16,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     String name;
     int version;
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "wordlist.db";
     public static final String TABLE_WORDS =  "wordListTable";
     public static final String COLUMN_ID = "_id";
@@ -61,7 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 */
     public void addWords(String dutchWord, String englishWord, String listName){
-        SQLiteDatabase db = getWritableDatabase();
+        /*SQLiteDatabase db = getWritableDatabase();
         String query = "INSERT INTO " + TABLE_WORDS + "(" +
                 COLUMN_ID + ", " +
                 COLUMN_LISTNAME + ", " +
@@ -70,6 +71,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 " VALUES " + "(" + "?, " +
                 "?, " + "?, " + "?" + ");";
         db.execSQL(query);
+        db.close();*/
+
+        ContentValues content = new ContentValues();
+        content.put(COLUMN_LISTNAME, listName);
+        content.put(COLUMN_DUTCH, dutchWord);
+        content.put(COLUMN_ENGLISH, englishWord);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_WORDS, null, content);
         db.close();
     }
 

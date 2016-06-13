@@ -40,7 +40,6 @@ public class NewList extends AppCompatActivity {
                 }
                 else {
                     Intent addWordsIntent = new Intent(view.getContext(), AddWords.class);
-                    addWordsIntent.putExtra("addWords", view.getId());
 
                     Bundle bundle = new Bundle();
                     bundle.putString("name", listNameInput);

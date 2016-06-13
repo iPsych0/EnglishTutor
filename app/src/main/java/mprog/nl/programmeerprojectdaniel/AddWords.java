@@ -2,12 +2,19 @@ package mprog.nl.programmeerprojectdaniel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.util.ArrayList;
 
 public class AddWords extends AppCompatActivity {
 
@@ -16,7 +23,8 @@ public class AddWords extends AppCompatActivity {
     Button addButton;
     EditText dutchWordInput;
     EditText englishWordInput;
-    Context context;
+
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +36,17 @@ public class AddWords extends AppCompatActivity {
         final String listName = extras.getString("name");
         // TODO add adapter to listview!
 
-        context = this;
-        dbHelper = new DBHelper(context, null, null, 1);
-        dbHelper.checkLists();
+        System.out.println(listName);
 
-        dutchWordInput = (EditText)findViewById(R.id.addDutch);
-        englishWordInput = (EditText)findViewById(R.id.addEnglish);
+        dbHelper = new DBHelper(this, null, null, 1);
 
-        addButton = (Button)findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener(){
+        dutchWordInput = (EditText) findViewById(R.id.addDutch);
+        englishWordInput = (EditText) findViewById(R.id.addEnglish);
+
+        addButton = (Button) findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 String dutchWord = dutchWordInput.getText().toString();
                 String englishWord = englishWordInput.getText().toString();
 
@@ -48,18 +56,60 @@ public class AddWords extends AppCompatActivity {
                 dutchWordInput.setText("");
                 englishWordInput.setText("");
                 System.out.println(dbHelper.checkLists());
-                System.out.println(dbHelper.getListLists());
 
             }
         });
-        doneButton = (Button)findViewById(R.id.doneButton);
-        doneButton.setOnClickListener(new View.OnClickListener(){
+        doneButton = (Button) findViewById(R.id.doneButton);
+        doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 Intent practiseIntent = new Intent(view.getContext(), Practise.class);
                 startActivity(practiseIntent);
                 finish();
             }
         });
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "AddWords Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://mprog.nl.programmeerprojectdaniel/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "AddWords Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://mprog.nl.programmeerprojectdaniel/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }
