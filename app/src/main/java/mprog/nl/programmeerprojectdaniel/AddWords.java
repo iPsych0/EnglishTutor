@@ -1,11 +1,20 @@
 package mprog.nl.programmeerprojectdaniel;
 
+/* Student name: Daniel Oliemans
+ * Student number: 11188669
+ * Universiteit van Amsterdam
+ * Programmeer Project
+ */
+
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,102 +25,81 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
+/*
+ * Activity that adds the users words into the database, in the corresponding list
+ */
 public class AddWords extends AppCompatActivity {
 
+    // Declaring the DBHelper file and the XML items
     DBHelper dbHelper;
     Button doneButton;
     Button addButton;
     EditText dutchWordInput;
     EditText englishWordInput;
 
-    private GoogleApiClient client;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_words);
 
+        // Retrieve the list name from the previous activity
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         final String listName = extras.getString("name");
-        // TODO add adapter to listview!
 
-        System.out.println(listName);
-
+        // Initialising the DBHelper class and the XML items
         dbHelper = new DBHelper(this, null, null, 1);
-
         dutchWordInput = (EditText) findViewById(R.id.addDutch);
         englishWordInput = (EditText) findViewById(R.id.addEnglish);
-
         addButton = (Button) findViewById(R.id.addButton);
+        doneButton = (Button) findViewById(R.id.doneButton);
+
+        // onClick listener for the add button
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Retrieves the words from the EditText given by the user
                 String dutchWord = dutchWordInput.getText().toString();
                 String englishWord = englishWordInput.getText().toString();
 
-                //TODO add Toast
+                // Execute the addWords function that adds the words and list name to the database
                 dbHelper.addWords(dutchWord, englishWord, listName);
+
+                // Inform the user the words and the list have been successfully added
                 Toast.makeText(AddWords.this, "Words " + dutchWord + " and " + englishWord + " added to " + listName, Toast.LENGTH_SHORT).show();
+
+                // Clears the text fields for the next word to be entered
                 dutchWordInput.setText("");
                 englishWordInput.setText("");
-                System.out.println(dbHelper.checkLists());
-                System.out.println(dbHelper.getWordLists(listName));
-
-
             }
         });
-        doneButton = (Button) findViewById(R.id.doneButton);
+
+        // onClick listener for the done button
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent practiseIntent = new Intent(view.getContext(), Practise.class);
-                startActivity(practiseIntent);
-                finish();
+                // Creates dialog window for confirmation of completion
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddWords.this);
+                builder
+                        .setMessage("Is your list finished?")
+                        .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                // If the user is done creating the list, send back to the Practise activity
+                                Intent practiseIntent = new Intent(AddWords.this, Practise.class);
+                                startActivity(practiseIntent);
+                                finish();
+                            }
+                        })
+                        // Nothing is done when "No" is pressed
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
             }
         });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "AddWords Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://mprog.nl.programmeerprojectdaniel/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "AddWords Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://mprog.nl.programmeerprojectdaniel/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
     }
 }

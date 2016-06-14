@@ -1,5 +1,11 @@
 package mprog.nl.programmeerprojectdaniel;
 
+/* Student name: Daniel Oliemans
+ * Student number: 11188669
+ * Universiteit van Amsterdam
+ * Programmeer Project
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,6 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+/*
+ * Activity that presents users with a "Word of the day"
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

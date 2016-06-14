@@ -1,16 +1,17 @@
 package mprog.nl.programmeerprojectdaniel;
 
+/* Student name: Daniel Oliemans
+ * Student number: 11188669
+ * Universiteit van Amsterdam
+ * Programmeer Project
+ */
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-/* Student name: Daniel Oliemans
- * Student number: 11188669
- * Universiteit van Amsterdam
- */
 
 /*
  * Queries the HTTP requests and parses the query string
@@ -71,6 +72,7 @@ public class HTTPRequestHelper {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        // Return the JSON string
         return result_dictionary;
     }
 }

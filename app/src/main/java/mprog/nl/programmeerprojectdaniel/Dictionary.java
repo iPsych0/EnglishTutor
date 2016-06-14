@@ -1,5 +1,11 @@
 package mprog.nl.programmeerprojectdaniel;
 
+/* Student name: Daniel Oliemans
+ * Student number: 11188669
+ * Universiteit van Amsterdam
+ * Programmeer Project
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,13 +21,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+/*
+ * Activity that allows users to translate words through the Yandex dictionary API
+ */
 public class Dictionary extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Spinner languageSpinner;
     EditText translationInput;
+    EditText translationText;
+    EditText wordType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +44,10 @@ public class Dictionary extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.languageSpinner = (Spinner) this.findViewById(R.id.languageSpinner);
-        this.translationInput = (EditText) this.findViewById(R.id.translationInput);
+        languageSpinner = (Spinner) this.findViewById(R.id.languageSpinner);
+        translationInput = (EditText) this.findViewById(R.id.translationInput);
+        translationText = (EditText) findViewById(R.id.translationResult);
+        wordType = (EditText) findViewById(R.id.wordType);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -49,6 +65,10 @@ public class Dictionary extends AppCompatActivity
         ASyncTask aSyncTask = new ASyncTask(this);
         aSyncTask.execute(translation);
         translationInput.setText("");
+    }
+
+    public void translationData(String translation, String wordType){
+        System.out.println("The function contains: " + translation + " " + wordType);
     }
 
     @Override

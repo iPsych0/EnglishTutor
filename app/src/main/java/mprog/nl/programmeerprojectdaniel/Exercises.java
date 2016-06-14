@@ -1,5 +1,11 @@
 package mprog.nl.programmeerprojectdaniel;
 
+/* Student name: Daniel Oliemans
+ * Student number: 11188669
+ * Universiteit van Amsterdam
+ * Programmeer Project
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;

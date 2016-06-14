@@ -1,5 +1,11 @@
 package mprog.nl.programmeerprojectdaniel;
 
+/* Student name: Daniel Oliemans
+ * Student number: 11188669
+ * Universiteit van Amsterdam
+ * Programmeer Project
+ */
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,9 +33,14 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Activity that allows users to create lists of their own and shows users the word lists they have
+ * created
+ */
 public class Practise extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // Declaring the DBHelper file and the ListView
     DBHelper dbHelper;
     ListView wordList;
 
@@ -40,21 +51,25 @@ public class Practise extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Initialising the ListView and DBHelper file
         wordList = (ListView)findViewById(R.id.wordList);
         dbHelper = new DBHelper(this, null, null, 1);
 
-        System.out.println(dbHelper.checkLists());
-
+        // Fill the ArrayList with the list returned from the function in DBHelper
         ArrayList<String> listsArrayList = dbHelper.checkLists();
+
+        // Set the ArrayAdapter to display the ArrayList
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listsArrayList);
         wordList.setAdapter(arrayAdapter);
 
+        // If item is long clicked, it can be deleted
         wordList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id){
                 final String chosenList = String.valueOf(adapterView.getItemAtPosition(position));
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Practise.this);
 
+                    // Creates dialog window for confirmation of deletion
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Practise.this);
                     builder
                             .setMessage("Are you sure you want to delete this list?")
                             .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
@@ -70,6 +85,7 @@ public class Practise extends AppCompatActivity
                                     wordList.setAdapter(arrayAdapter);
                                 }
                             })
+                            // Nothing is done when "No" is pressed
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,int id) {
@@ -81,6 +97,7 @@ public class Practise extends AppCompatActivity
             }
         });
 
+        // If item is clicked, user goes to the corresponding Exercises activity
         wordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
