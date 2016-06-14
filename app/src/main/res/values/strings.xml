@@ -17,6 +17,7 @@
     <string name="databaseTitle">Create your own word list</string>
     <string name="translationHome">Translation:</string>
     <string name="exampleHome">Example:</string>
+    <string name="scoreText">Score:</string>
     <string name="action_settings">Settings</string>
     <string name="translateRequest">Dictionary</string>
     <string name="translateHint">Enter the word you wish to translate</string>

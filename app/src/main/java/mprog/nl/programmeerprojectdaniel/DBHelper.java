@@ -49,30 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /*
-    public void addList(String listNameInput){
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "INSERT INTO " + TABLE_WORDS + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_LISTNAME + " TEXT, " +
-                COLUMN_DUTCH + " TEXT, " +
-                COLUMN_ENGLISH + " TEXT, " + ");";
-        db.execSQL(query);
-        db.close();
-    }
-*/
     public void addWords(String dutchWord, String englishWord, String listName){
-        /*SQLiteDatabase db = getWritableDatabase();
-        String query = "INSERT INTO " + TABLE_WORDS + "(" +
-                COLUMN_ID + ", " +
-                COLUMN_LISTNAME + ", " +
-                COLUMN_DUTCH + ", " +
-                COLUMN_ENGLISH + ") " +
-                " VALUES " + "(" + "?, " +
-                "?, " + "?, " + "?" + ");";
-        db.execSQL(query);
-        db.close();*/
-
         ContentValues content = new ContentValues();
         content.put(COLUMN_LISTNAME, listName);
         content.put(COLUMN_DUTCH, dutchWord);
@@ -82,56 +59,24 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteWords(String words, String listName){
+    public void deleteLists(String listName){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_WORDS + " WHERE " + COLUMN_DUTCH + "=\"" + words + "\";");
-        db.execSQL("DELETE FROM " + TABLE_WORDS + " WHERE " + COLUMN_ENGLISH + "=\"" + words + "\";");
-        db.execSQL("DELETE FROM " + TABLE_WORDS + " WHERE " + COLUMN_LISTNAME + "=\"" + words + "\";");
+        db.execSQL("DELETE FROM " + TABLE_WORDS + " WHERE " + COLUMN_LISTNAME + "=\"" + listName + "\";");
         db.close();
     }
 
-    public ArrayList<String> getListLists(){
-        // Make arraylist to store listname strings
-        ArrayList<String> listsArrayList = new ArrayList<>();
-
-        // Get database and get all listname items
+    public ArrayList<String> getWordLists(String listName){
+        ArrayList<String> wordsArrayList = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT DISTINCT " + COLUMN_LISTNAME + " FROM " + TABLE_WORDS + " WHERE 1";
-
-        // Set cursor on returned listname items
-        Cursor c = db.rawQuery(query, null);
-
-        // move through listname items and add each to arraylist listarraylist
-        if (c.moveToFirst()){
-            do{
-                listsArrayList.add(c.getString(0));
-            } while(c.moveToNext());
-        }
-        db.close();
-        c.close();
-
-        return listsArrayList;
-    }
-
-    public ArrayList<Words> getWordLists(String listName){
-        ArrayList<Words> wordsArrayList = new ArrayList<>();
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT " + COLUMN_DUTCH + ", " + COLUMN_ENGLISH + " FROM " + TABLE_WORDS +
-                " WHERE " + COLUMN_LISTNAME;
+        String query = "SELECT * FROM " + TABLE_WORDS + " WHERE " + COLUMN_LISTNAME + "='" + listName + "';";
 
         Cursor c = db.rawQuery(query, null);
         // Set cursor to first
         if (c.moveToFirst()) {
             // Loop through database
             do {
-                // Create a new word row
-                Words wordRow = new Words();
-                wordRow.set_id(c.getInt(0));
-                wordRow.set_listName(c.getString(1));
-                wordRow.set_dutchWord(c.getString(2));
-                wordRow.set_englishWord(c.getString(3));
-                // Add word row
-                wordsArrayList.add(wordRow);
+                wordsArrayList.add(c.getString(2));
+                wordsArrayList.add(c.getString(3));
             } while (c.moveToNext()) ;
         }
         // Close database and cursor and return the ArrayList of rows

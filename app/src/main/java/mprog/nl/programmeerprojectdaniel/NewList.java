@@ -33,12 +33,12 @@ public class NewList extends AppCompatActivity {
                   //  addListName.setText("");
                 //}
                 System.out.println(dbHelper.checkLists());
-                Toast.makeText(NewList.this, "List: " + listNameInput + " is created.", Toast.LENGTH_SHORT).show();
 
                 if (dbHelper.checkLists().contains(listNameInput)){
                     Toast.makeText(NewList.this, "This list already exists", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    Toast.makeText(NewList.this, "List: " + listNameInput + " is created.", Toast.LENGTH_SHORT).show();
                     Intent addWordsIntent = new Intent(view.getContext(), AddWords.class);
 
                     Bundle bundle = new Bundle();

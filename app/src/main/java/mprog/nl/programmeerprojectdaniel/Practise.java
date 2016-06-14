@@ -1,10 +1,12 @@
 package mprog.nl.programmeerprojectdaniel;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
@@ -37,23 +40,63 @@ public class Practise extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        final String listName = extras.getString("name");
-        */
-
         wordList = (ListView)findViewById(R.id.wordList);
         dbHelper = new DBHelper(this, null, null, 1);
 
         System.out.println(dbHelper.checkLists());
 
-
         ArrayList<String> listsArrayList = dbHelper.checkLists();
-        if (dbHelper.checkLists().isEmpty()) {
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listsArrayList);
-            wordList.setAdapter(arrayAdapter);
-        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listsArrayList);
+        wordList.setAdapter(arrayAdapter);
+
+        wordList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id){
+                final String chosenList = String.valueOf(adapterView.getItemAtPosition(position));
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Practise.this);
+
+                    builder
+                            .setMessage("Are you sure you want to delete this list?")
+                            .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // Deletes the list, including its contents
+                                    dbHelper.deleteLists(chosenList);
+                                    Toast.makeText(Practise.this, "List " + chosenList + " has been deleted.", Toast.LENGTH_SHORT).show();
+
+                                    // Re-set the adapter to update the ListView
+                                    ArrayList<String> listsArrayList = dbHelper.checkLists();
+                                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(Practise.this, android.R.layout.simple_list_item_1, listsArrayList);
+                                    wordList.setAdapter(arrayAdapter);
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog,int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .show();
+                return false;
+            }
+        });
+
+        wordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Determine chosen wordlist and opens new intent
+                String chosenList = String.valueOf(adapterView.getItemAtPosition(position));
+                Intent exercisesIntent = new Intent(Practise.this, Exercises.class);
+
+                // Bundles the chosen wordlist as string
+                Bundle bundle = new Bundle();
+                bundle.putString("wordlist", chosenList);
+
+                // Start exercises activity
+                exercisesIntent.putExtras(bundle);
+                startActivity(exercisesIntent);
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

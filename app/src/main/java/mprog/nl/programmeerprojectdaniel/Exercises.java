@@ -2,9 +2,6 @@ package mprog.nl.programmeerprojectdaniel;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,10 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TwoLineListItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Exercises extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    DBHelper dbHelper;
+    ListView wordsListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,22 @@ public class Exercises extends AppCompatActivity
         setContentView(R.layout.activity_exercises);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dbHelper = new DBHelper(this, null, null, 1);
+        wordsListView = (ListView) findViewById(R.id.wordsListView);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        final String wordList = extras.getString("wordlist");
+
+        System.out.println(wordList);
+        System.out.println(dbHelper.getWordLists(wordList));
+
+        ArrayList<String> wordsArrayList = dbHelper.getWordLists(wordList);
+        System.out.println(wordsArrayList);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, wordsArrayList);
+        wordsListView.setAdapter(arrayAdapter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

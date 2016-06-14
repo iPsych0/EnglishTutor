@@ -56,6 +56,8 @@ public class AddWords extends AppCompatActivity {
                 dutchWordInput.setText("");
                 englishWordInput.setText("");
                 System.out.println(dbHelper.checkLists());
+                System.out.println(dbHelper.getWordLists(listName));
+
 
             }
         });
