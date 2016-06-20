@@ -6,6 +6,7 @@ package mprog.nl.programmeerprojectdaniel;
  * Programmeer Project
  */
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,8 +37,10 @@ public class Dictionary extends AppCompatActivity
 
     private Spinner languageSpinner;
     EditText translationInput;
-    EditText translationText;
-    EditText wordType;
+    TextView translationText;
+    TextView wordTypeText;
+    Button translateButton;
+    private InputMethodManager inputMethodManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +49,12 @@ public class Dictionary extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        translateButton = (Button) findViewById(R.id.translateButton);
         languageSpinner = (Spinner) this.findViewById(R.id.languageSpinner);
         translationInput = (EditText) this.findViewById(R.id.translationInput);
-        translationText = (EditText) findViewById(R.id.translationResult);
-        wordType = (EditText) findViewById(R.id.wordType);
+        translationText = (TextView) findViewById(R.id.translationResult);
+        wordTypeText = (TextView) findViewById(R.id.wordType);
+        inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -59,16 +66,32 @@ public class Dictionary extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /*
+     * This function starts an ASyncTask when the button is pressed
+     */
     public void Translate(View view){
         String translation = translationInput.getText().toString();
-
-        ASyncTask aSyncTask = new ASyncTask(this);
-        aSyncTask.execute(translation);
-        translationInput.setText("");
+        if(!translation.isEmpty()) {
+            // Use selected option in languageSpinner for the query as parameter
+            inputMethodManager.hideSoftInputFromWindow(translateButton.getWindowToken(), 0);
+            // Execute the ASyncTask with the word given by the user
+            ASyncTask aSyncTask = new ASyncTask(this);
+            TextView txtView = (TextView) languageSpinner.getSelectedView();
+            String languageSelected = txtView.getText().toString().toLowerCase();
+            aSyncTask.execute(languageSelected, translation);
+        }
     }
 
+    /*
+     * This function retrieves the translation strings, sets the TextViews and informs the user
+     */
     public void translationData(String translation, String wordType){
-        System.out.println("The function contains: " + translation + " " + wordType);
+        // Set the TextViews to the translated fields
+        translationText.setText(translation);
+        wordTypeText.setText(wordType);
+        // Remind the user which word they translated for the given results
+        Toast.makeText(Dictionary.this, "Word '" + translationInput.getText().toString() + "' translated." , Toast.LENGTH_LONG).show();
+        translationInput.setText("");
     }
 
     @Override

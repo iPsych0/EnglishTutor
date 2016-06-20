@@ -28,10 +28,10 @@ public class HTTPRequestHelper {
         String result_dictionary = "";
 
         // Chosen language from argument
-        String chosenLanguage = "en-nl";
+        String chosenLanguage = params[0];
 
         // Chosen text from argument
-        String chosenWord = params[0];
+        String chosenWord = params[1];
 
         // Complete string url for dictionary translations
         String dictionaryUrl = api_endpoint + api_key + "&lang=" + chosenLanguage + "&text=" + chosenWord;
@@ -46,7 +46,7 @@ public class HTTPRequestHelper {
 
         // Make the connection
         HttpURLConnection connection;
-        if(url != null)
+        if(url != null) {
             try {
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -57,21 +57,23 @@ public class HTTPRequestHelper {
                 Integer responseCode = connection.getResponseCode();
 
                 // If 200-300, read inputstream
-                if (200 <=  responseCode && responseCode <= 299){
+                if (200 <= responseCode && responseCode <= 299) {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String line;
-                    while((line = bufferedReader.readLine()) != null){
+                    while ((line = bufferedReader.readLine()) != null) {
                         result_dictionary = result_dictionary + line;
                     }
-                }
-                // Else read error stream
-                else{
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-                    // Communicate error
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+            // Else read error stream
+            /*else{
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                // Communicate error
+            }*/
+
         // Return the JSON string
         return result_dictionary;
     }

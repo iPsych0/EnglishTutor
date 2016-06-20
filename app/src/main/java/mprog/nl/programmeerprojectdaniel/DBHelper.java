@@ -112,6 +112,52 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /*
+     * Function that queries over the words stored in a list and returns an ArrayList of those words
+     */
+    public ArrayList<String> getDutchWords(String listName){
+        ArrayList<String> wordsArrayList = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_WORDS + " WHERE " + COLUMN_LISTNAME + "='" + listName + "';";
+
+        Cursor c = db.rawQuery(query, null);
+        // Set cursor to first
+        if (c.moveToFirst()) {
+            // Loop through the database and retrieves the Dutch and English words
+            do {
+                wordsArrayList.add(c.getString(2));
+            } while (c.moveToNext()) ;
+        }
+        // Close database and cursor and return the ArrayList of rows
+        db.close();
+        c.close();
+
+        return wordsArrayList;
+    }
+
+    /*
+     * Function that queries over the words stored in a list and returns an ArrayList of those words
+     */
+    public ArrayList<String> getEnglishWords(String listName){
+        ArrayList<String> wordsArrayList = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_WORDS + " WHERE " + COLUMN_LISTNAME + "='" + listName + "';";
+
+        Cursor c = db.rawQuery(query, null);
+        // Set cursor to first
+        if (c.moveToFirst()) {
+            // Loop through the database and retrieves the Dutch and English words
+            do {
+                wordsArrayList.add(c.getString(3));
+            } while (c.moveToNext()) ;
+        }
+        // Close database and cursor and return the ArrayList of rows
+        db.close();
+        c.close();
+
+        return wordsArrayList;
+    }
+
+    /*
      * Function that queries over all unique list names and returns an ArrayList of all unique lists
      */
     public ArrayList<String> checkLists() {

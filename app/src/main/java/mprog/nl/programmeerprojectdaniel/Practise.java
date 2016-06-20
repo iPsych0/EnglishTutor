@@ -43,6 +43,7 @@ public class Practise extends AppCompatActivity
     // Declaring the DBHelper file and the ListView
     DBHelper dbHelper;
     ListView wordList;
+    Exercises exercises;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,16 +103,52 @@ public class Practise extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Determine chosen wordlist and opens new intent
-                String chosenList = String.valueOf(adapterView.getItemAtPosition(position));
-                Intent exercisesIntent = new Intent(Practise.this, Exercises.class);
+                final String chosenList = String.valueOf(adapterView.getItemAtPosition(position));
+                final Intent exercisesIntent = new Intent(Practise.this, Exercises.class);
 
-                // Bundles the chosen wordlist as string
-                Bundle bundle = new Bundle();
-                bundle.putString("wordlist", chosenList);
+                // Creates dialog window for language selection
+                AlertDialog.Builder builder = new AlertDialog.Builder(Practise.this);
+                builder
+                        .setMessage("Practise words EN-NL or NL-EN?")
+                        // Set list to EN-NL if pressed
+                        .setPositiveButton("EN-NL",  new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Create string language which is passed on to Exercises
+                                String language = "english";
 
-                // Start exercises activity
-                exercisesIntent.putExtras(bundle);
-                startActivity(exercisesIntent);
+                                // Bundles the word list as string and bundles the english words
+                                ArrayList<String> englishWordsArray = dbHelper.getEnglishWords(chosenList);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("chosenlist", chosenList);
+                                bundle.putStringArrayList("wordlist", englishWordsArray);
+                                bundle.putString("language", language);
+
+                                // Start exercises activity
+                                exercisesIntent.putExtras(bundle);
+                                startActivity(exercisesIntent);
+                            }
+                        })
+                        // Set list to NL-EN if pressed
+                        .setNegativeButton("NL-EN", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int id) {
+                                // Create string language which is  passed on to Exercises
+                                String language = "dutch";
+
+                                // Bundles the word list as string and bundles the english words
+                                ArrayList<String> dutchWordsArray = dbHelper.getDutchWords(chosenList);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("chosenlist", chosenList);
+                                bundle.putStringArrayList("wordlist", dutchWordsArray);
+                                bundle.putString("language", language);
+
+                                // Start exercises activity
+                                exercisesIntent.putExtras(bundle);
+                                startActivity(exercisesIntent);
+                            }
+                        })
+                        .show();
             }
         });
 

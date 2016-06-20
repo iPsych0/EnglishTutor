@@ -35,33 +35,31 @@
         android:layout_height="wrap_content"
         android:id="@+id/languageSpinner"
         android:entries="@array/languages"
-        android:layout_above="@+id/translationResult"
+        android:layout_below="@+id/translateButton"
         android:layout_alignRight="@+id/translateButton"
         android:layout_alignEnd="@+id/translateButton"
         android:layout_alignLeft="@+id/translateButton"
         android:layout_alignStart="@+id/translateButton" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
-        android:inputType="text"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="14sp"
         android:textAlignment="center"
         android:id="@+id/translationResult"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:layout_below="@+id/translationExample"
+        android:layout_centerHorizontal="true" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:inputType="text"
+        android:textSize="14sp"
         android:textAlignment="center"
         android:id="@+id/wordType"
         android:visibility="visible"
-        android:layout_marginTop="60dp"
-        android:layout_below="@+id/translationResult"
+        android:layout_below="@+id/translationWordType"
+        android:layout_centerHorizontal="true"
         android:layout_alignLeft="@+id/translationResult"
         android:layout_alignStart="@+id/translationResult" />
 
@@ -73,6 +71,25 @@
         android:id="@+id/translateButton"
         android:layout_below="@+id/translationInput"
         android:onClick="Translate"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/translation"
+        android:id="@+id/translationExample"
+        android:layout_below="@+id/languageSpinner"
+        android:layout_alignLeft="@+id/translationWordType"
+        android:layout_alignStart="@+id/translationWordType" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/wordType"
+        android:id="@+id/translationWordType"
+        android:layout_below="@+id/translationResult"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

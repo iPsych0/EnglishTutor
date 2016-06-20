@@ -42,8 +42,12 @@ public class NewList extends AppCompatActivity {
                 // Retrieves the list name given by the user
                 String listNameInput = addListName.getText().toString();
 
+                if(listNameInput.isEmpty()){
+                    addListName.setText("");
+                    Toast.makeText(NewList.this, "Please enter a list name", Toast.LENGTH_SHORT).show();
+                }
                 // Ensures valid characters are submitted
-                if(!listNameInput.matches("[a-zA-Z1-9\\s]+")){
+                else if(!listNameInput.matches("[a-zA-Z1-9\\s]+")) {
                     addListName.setText("");
                     Toast.makeText(NewList.this, "Please enter valid characters", Toast.LENGTH_SHORT).show();
                 }
@@ -65,7 +69,7 @@ public class NewList extends AppCompatActivity {
                         finish();
                     }
                 }
-                }
-            });
-        }
+            }
+        });
     }
+}

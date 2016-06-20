@@ -12,6 +12,12 @@
     tools:context="mprog.nl.programmeerprojectdaniel.Exercises"
     tools:showIn="@layout/app_bar_exercises">
 
+    <ListView
+        android:id="@+id/wordsListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/scoreText"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,13 +26,25 @@
         android:text="@string/scoreText"
         android:id="@+id/scoreText"
         android:textStyle="bold"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/submitButton"
         android:layout_centerHorizontal="true" />
 
-    <ListView
-        android:id="@+id/wordsListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/scoreText"
-        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/score"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/scoreText"
+        android:layout_above="@+id/submitButton"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submitButton"
+        android:id="@+id/submitButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:nestedScrollingEnabled="true" />
 </RelativeLayout>

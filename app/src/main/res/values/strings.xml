@@ -18,9 +18,13 @@
     <string name="translationHome">Translation:</string>
     <string name="exampleHome">Example:</string>
     <string name="scoreText">Score:</string>
-    <string name="translation">Translation:</string>
+    <string name="translation">Translation</string>
+    <string name="wordType">Word type</string>
+    <string name="listHint">Click a list to practise - Hold a list to delete</string>
     <string name="action_settings">Settings</string>
+    <string name="wordHint">Enter translation here</string>
     <string name="translateRequest">Dictionary</string>
+    <string name="submitButton">Submit</string>
     <string name="translateHint">Enter the word you wish to translate</string>
     <string name="title_activity_dictionary">Dictionary</string>
     <string name="title_activity_practise">Practise</string>

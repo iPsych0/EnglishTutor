@@ -14,8 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 /*
  * Parses over the JSON given from the query string results
  */
@@ -50,6 +48,7 @@ public class ASyncTask extends AsyncTask<String, Integer, String> {
         super.onProgressUpdate(values);
     }
 
+
     // Retrieves the XML from the query request
     @Override
     protected void onPostExecute(String result_dictionary) {
@@ -57,29 +56,33 @@ public class ASyncTask extends AsyncTask<String, Integer, String> {
         // If the JSON result is empty (meaning: word not in the dictionary) inform the user
         if (result_dictionary.equals("{\"head\":{},\"def\":[]}")) {
             Toast.makeText(context, "Word not found", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, result_dictionary, Toast.LENGTH_LONG).show();
-            try {
-                //Create JSON object from the query result
-                JSONObject resultObject = new JSONObject(result_dictionary);
+        } else try {
+            //Create JSON object from the query result
+            JSONObject resultObject = new JSONObject(result_dictionary);
 
-                // Specify JSON to the array "def"
-                JSONArray defArray = resultObject.getJSONArray("def");
+            // Specify JSON to the array "def"
+            JSONArray defArray = resultObject.getJSONArray("def");
 
-                // Parse over the array of "def" which contains the translation & word type fields
-                for (int i = 0; i < defArray.length(); i++) {
-                    System.out.println("defArray is: " + defArray);
-                    System.out.println("resultObject is: " + resultObject);
-                    JSONObject translationObject = defArray.getJSONObject(i);
-                    String translation = translationObject.getString("text");
-                    String wordType = translationObject.getString("pos");
-                    System.out.println("String translation is: " + translation);
-                    System.out.println("String wordType is: " + wordType);
-                    this.dictionary.translationData(translation, wordType);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            // Parse over the array of "def" which contains the translation & word type fields
+            for (int i = 0; i < defArray.length(); i++) {
+                // Load in all JSON objects in "def"
+                JSONObject translationObject = defArray.getJSONObject(i);
+
+                // Create an Array of the "tr" tag which contains the translated fields
+                JSONArray trArray = translationObject.getJSONArray("tr");
+
+                // The first object in "tr" contains the translation fields
+                JSONObject trObject = trArray.getJSONObject(0);
+
+                // Get the string values from the objects for translation and word type
+                String translation = trObject.getString("text");
+                String wordType = trObject.getString("pos");
+
+                // Pass along the strings to the Dictionary activity
+                dictionary.translationData(translation, wordType);
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }

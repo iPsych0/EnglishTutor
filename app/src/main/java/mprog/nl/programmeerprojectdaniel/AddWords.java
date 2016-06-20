@@ -62,15 +62,37 @@ public class AddWords extends AppCompatActivity {
                 String dutchWord = dutchWordInput.getText().toString();
                 String englishWord = englishWordInput.getText().toString();
 
-                // Execute the addWords function that adds the words and list name to the database
-                dbHelper.addWords(dutchWord, englishWord, listName);
+                if(dutchWord.isEmpty()){
+                    // setText because if 1 box is empty, the other is filled with invalid character
+                    // the other text will remain in the textbox
+                    dutchWordInput.setText("");
+                    Toast.makeText(AddWords.this, "Please fill in both words", Toast.LENGTH_SHORT).show();
+                }
+                else if(englishWord.isEmpty()){
+                    // setText because if 1 box is empty, the other is filled with invalid character
+                    // the other text will remain in the textbox
+                    dutchWordInput.setText("");
+                    Toast.makeText(AddWords.this, "Please fill in both words", Toast.LENGTH_SHORT).show();
+                }
+                else if(!dutchWord.matches("[a-zA-Z1-9\\s]+")){
+                    dutchWordInput.setText("");
+                    Toast.makeText(AddWords.this, "Please enter valid characters", Toast.LENGTH_SHORT).show();
+                }
+                else if(!englishWord.matches("[a-zA-Z1-9\\s]+")){
+                    englishWordInput.setText("");
+                    Toast.makeText(AddWords.this, "Please enter valid characters", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // Execute the addWords function that adds the words and list name to the database
+                    dbHelper.addWords(dutchWord, englishWord, listName);
 
-                // Inform the user the words and the list have been successfully added
-                Toast.makeText(AddWords.this, "Words " + dutchWord + " and " + englishWord + " added to " + listName, Toast.LENGTH_SHORT).show();
+                    // Inform the user the words and the list have been successfully added
+                    Toast.makeText(AddWords.this, "Words " + dutchWord + " and " + englishWord + " added to " + listName, Toast.LENGTH_SHORT).show();
 
-                // Clears the text fields for the next word to be entered
-                dutchWordInput.setText("");
-                englishWordInput.setText("");
+                    // Clears the text fields for the next word to be entered
+                    dutchWordInput.setText("");
+                    englishWordInput.setText("");
+                }
             }
         });
 
@@ -85,10 +107,20 @@ public class AddWords extends AppCompatActivity {
                         .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                // If the user is done creating the list, send back to the Practise activity
-                                Intent practiseIntent = new Intent(AddWords.this, Practise.class);
-                                startActivity(practiseIntent);
-                                finish();
+                                // If user is done creating the list, send back to Practise activity
+                                if(dbHelper.getDutchWords(listName).isEmpty()){
+                                    Toast.makeText(AddWords.this, "Please add at least one Dutch and English word to your list!", Toast.LENGTH_SHORT).show();
+                                    dialog.cancel();
+                                }
+                                else if(dbHelper.getEnglishWords(listName).isEmpty()){
+                                    Toast.makeText(AddWords.this, "Please add at least one Dutch and English word to your list!", Toast.LENGTH_SHORT).show();
+                                    dialog.cancel();
+                                }
+                                else {
+                                    Intent practiseIntent = new Intent(AddWords.this, Practise.class);
+                                    startActivity(practiseIntent);
+                                    finish();
+                                }
                             }
                         })
                         // Nothing is done when "No" is pressed
