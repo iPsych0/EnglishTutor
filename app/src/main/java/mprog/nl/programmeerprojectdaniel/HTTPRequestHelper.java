@@ -68,11 +68,6 @@ public class HTTPRequestHelper {
                 e.printStackTrace();
             }
         }
-            // Else read error stream
-            /*else{
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-                // Communicate error
-            }*/
 
         // Return the JSON string
         return result_dictionary;

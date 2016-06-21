@@ -87,9 +87,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.practiseButton) {
             Intent practise = new Intent(this, Practise.class);
             startActivity(practise);
-        } else if (id == R.id.settingsButton) {
-            Intent settings = new Intent(this, Settings.class);
-            startActivity(settings);
+        } else if (id == R.id.wordListButton) {
+            Intent wordList = new Intent(this, WordLists.class);
+            startActivity(wordList);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

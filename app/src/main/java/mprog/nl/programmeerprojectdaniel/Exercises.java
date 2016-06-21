@@ -8,7 +8,6 @@ package mprog.nl.programmeerprojectdaniel;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.UserDictionary;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,19 +17,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TwoLineListItem;
-
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class Exercises extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -74,10 +65,12 @@ public class Exercises extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        assert drawer != null;
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
         // Set the adapter to the ListView
@@ -94,7 +87,7 @@ public class Exercises extends AppCompatActivity
     }
 
     /*
-     * setAdapter loads in the TextViews and the EditTexts from custom adapter WordsAdapter
+     * setAdapter loads in the TextViews and the EditTexts from custom adapter ExercisesAdapter
      */
     public void setAdapter(){
         intent = getIntent();
@@ -102,15 +95,15 @@ public class Exercises extends AppCompatActivity
         // If the chosen language is Dutch
         if(language.equals("dutch")) {
             ArrayList<String> wordsArrayDutch = dbHelper.getDutchWords(chosenList);
-            // Loads in Dutch words from WordsAdapter and uses this to write in the ListView
-            WordsAdapter adapter = new WordsAdapter(this, wordsArrayDutch);
+            // Loads in Dutch words from ExercisesAdapter and uses this to write in the ListView
+            ExercisesAdapter adapter = new ExercisesAdapter(this, wordsArrayDutch);
             wordsListView.setAdapter(adapter);
         }
         // Else, chosen language is English
         else{
             ArrayList<String> wordsArrayEnglish = dbHelper.getEnglishWords(chosenList);
-            // Loads in English words from WordsAdapter and uses this to write in the ListView
-            WordsAdapter adapter = new WordsAdapter(this, wordsArrayEnglish);
+            // Loads in English words from ExercisesAdapter and uses this to write in the ListView
+            ExercisesAdapter adapter = new ExercisesAdapter(this, wordsArrayEnglish);
             wordsListView.setAdapter(adapter);
         }
     }
@@ -127,8 +120,8 @@ public class Exercises extends AppCompatActivity
         ArrayList<String> englishWords = dbHelper.getEnglishWords(chosenList);
 
         for (int i = 0; i < dutchWords.size(); i++) {
-            // getValueET from WordsAdapter fills wordInputArray with the values of the EditTexts
-            wordInputArray = (WordsAdapter.getValueET());
+            // getValueET from ExercisesAdapter fills wordInputArray with the values of the EditTexts
+            wordInputArray = (ExercisesAdapter.getValueET());
         }
 
         // If the user chose EN-NL, parse over the Dutch words in the EditTexts
@@ -169,10 +162,13 @@ public class Exercises extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else {
             super.onBackPressed();
+            finish();
         }
     }
 
@@ -206,23 +202,20 @@ public class Exercises extends AppCompatActivity
 
         if (id == R.id.homeButton) {
             Intent home = new Intent(this, MainActivity.class);
-            home.putExtra("home", id);
             startActivity(home);
         } else if (id == R.id.dictionaryButton) {
             Intent dictionary = new Intent(this, Dictionary.class);
-            dictionary.putExtra("dictionary", id);
             startActivity(dictionary);
         } else if (id == R.id.practiseButton) {
             Intent practise = new Intent(this, Practise.class);
-            practise.putExtra("practise", id);
             startActivity(practise);
-        } else if (id == R.id.settingsButton) {
-            Intent settings = new Intent(this, Settings.class);
-            settings.putExtra("settings", id);
-            startActivity(settings);
+        } else if (id == R.id.wordListButton) {
+            Intent wordList = new Intent(this, WordLists.class);
+            startActivity(wordList);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

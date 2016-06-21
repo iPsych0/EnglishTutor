@@ -1,16 +1,7 @@
 package mprog.nl.programmeerprojectdaniel;
 
-/* Student name: Daniel Oliemans
- * Student number: 11188669
- * Universiteit van Amsterdam
- * Programmeer Project
- */
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,83 +11,74 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/*
- * Activity that allows users to translate words through the Yandex dictionary API
- */
-public class Dictionary extends AppCompatActivity
+public class WordLists extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Spinner languageSpinner;
-    EditText translationInput;
-    TextView translationText;
-    TextView wordTypeText;
-    Button translateButton;
-    private InputMethodManager inputMethodManager;
+    ListView listsLV;
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dictionary);
+        setContentView(R.layout.activity_word_lists);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        translateButton = (Button) findViewById(R.id.translateButton);
-        languageSpinner = (Spinner) this.findViewById(R.id.languageSpinner);
-        translationInput = (EditText) this.findViewById(R.id.translationInput);
-        translationText = (TextView) findViewById(R.id.translationResult);
-        wordTypeText = (TextView) findViewById(R.id.wordType);
-        inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        assert drawer != null;
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
-    }
 
-    /*
-     * This function starts an ASyncTask when the button is pressed
-     */
-    public void Translate(View view){
-        String translation = translationInput.getText().toString();
-        if(!translation.isEmpty()) {
-            // Use selected option in languageSpinner for the query as parameter
-            inputMethodManager.hideSoftInputFromWindow(translateButton.getWindowToken(), 0);
-            // Execute the ASyncTask with the word given by the user
-            ASyncTask aSyncTask = new ASyncTask(this);
-            TextView txtView = (TextView) languageSpinner.getSelectedView();
-            String languageSelected = txtView.getText().toString().toLowerCase();
-            aSyncTask.execute(languageSelected, translation);
-        }
-    }
+        listsLV = (ListView) findViewById(R.id.wordLists);
+        dbHelper = new DBHelper(this, null, null, 1);
 
-    /*
-     * This function retrieves the translation strings, sets the TextViews and informs the user
-     */
-    public void translationData(String translation, String wordType){
-        // Set the TextViews to the translated fields
-        translationText.setText(translation);
-        wordTypeText.setText(wordType);
-        // Remind the user which word they translated for the given results
-        Toast.makeText(Dictionary.this, "Word '" + translationInput.getText().toString() + "' translated." , Toast.LENGTH_LONG).show();
-        translationInput.setText("");
+        // Fill the ArrayList with all list names
+        ArrayList<String> listsArrayList = dbHelper.checkLists();
+
+        // Set the ArrayAdapter to display the ArrayList of lists
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listsArrayList);
+        listsLV.setAdapter(arrayAdapter);
+
+        // If item is clicked, user goes to the corresponding Exercises activity
+        listsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Determine chosen word list and initialises new intent
+                final String chosenList = String.valueOf(adapterView.getItemAtPosition(position));
+                final Intent allWordsIntent = new Intent(WordLists.this, AllWords.class);
+
+                // Bundles the word list as string and bundles all words
+                ArrayList<String> dutchWordsArray = dbHelper.getDutchWords(chosenList);
+                ArrayList<String> englishWordsArray = dbHelper.getEnglishWords(chosenList);
+                Bundle bundle = new Bundle();
+                bundle.putString("chosenlist", chosenList);
+                bundle.putStringArrayList("dutchwordlist", dutchWordsArray);
+                bundle.putStringArrayList("englishwordlist", englishWordsArray);
+
+                // Start AllWords activity
+                allWordsIntent.putExtras(bundle);
+                startActivity(allWordsIntent);
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -107,7 +89,7 @@ public class Dictionary extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.dictionary, menu);
+        getMenuInflater().inflate(R.menu.word_lists, menu);
         return true;
     }
 
@@ -136,16 +118,17 @@ public class Dictionary extends AppCompatActivity
             Intent home = new Intent(this, MainActivity.class);
             startActivity(home);
         } else if (id == R.id.dictionaryButton) {
-            Toast.makeText(this, "You are already at Dictionary", Toast.LENGTH_SHORT).show();
+            Intent dictionary = new Intent(this, Dictionary.class);
+            startActivity(dictionary);
         } else if (id == R.id.practiseButton) {
             Intent practise = new Intent(this, Practise.class);
             startActivity(practise);
         } else if (id == R.id.wordListButton) {
-            Intent wordLists = new Intent(this, WordLists.class);
-            startActivity(wordLists);
+            Toast.makeText(this, "You are already at Your Word Lists", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

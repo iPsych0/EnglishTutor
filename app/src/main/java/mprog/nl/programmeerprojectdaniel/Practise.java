@@ -6,12 +6,10 @@ package mprog.nl.programmeerprojectdaniel;
  * Programmeer Project
  */
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -24,14 +22,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /*
  * Activity that allows users to create lists of their own and shows users the word lists they have
@@ -43,7 +36,6 @@ public class Practise extends AppCompatActivity
     // Declaring the DBHelper file and the ListView
     DBHelper dbHelper;
     ListView wordList;
-    Exercises exercises;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,10 +147,12 @@ public class Practise extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        assert drawer != null;
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addButton);
@@ -213,21 +207,19 @@ public class Practise extends AppCompatActivity
 
         if (id == R.id.homeButton) {
             Intent home = new Intent(this, MainActivity.class);
-            home.putExtra("home", id);
             startActivity(home);
         } else if (id == R.id.dictionaryButton) {
             Intent dictionary = new Intent(this, Dictionary.class);
-            dictionary.putExtra("dictionary", id);
             startActivity(dictionary);
         } else if (id == R.id.practiseButton) {
             Toast.makeText(this, "You are already at Practise", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.settingsButton) {
-            Intent settings = new Intent(this, Settings.class);
-            settings.putExtra("settings", id);
-            startActivity(settings);
+        } else if (id == R.id.wordListButton) {
+            Intent wordList = new Intent(this, WordLists.class);
+            startActivity(wordList);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

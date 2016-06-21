@@ -15,8 +15,8 @@
             android:icon="@android:drawable/ic_menu_edit"
             android:title="@string/Practise" />
         <item
-            android:id="@+id/settingsButton"
-            android:icon="@drawable/ic_menu_preferences"
-            android:title="@string/Settings" />
+            android:id="@+id/wordListButton"
+            android:icon="@android:drawable/ic_menu_save"
+            android:title="@string/wordLists" />
     </group>
 </menu>

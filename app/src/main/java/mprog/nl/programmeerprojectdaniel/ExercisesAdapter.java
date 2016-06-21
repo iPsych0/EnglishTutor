@@ -19,14 +19,14 @@ import java.util.ArrayList;
 /*
  * Custom adapter to read over the ArrayList
  */
-public class WordsAdapter extends BaseAdapter {
+public class ExercisesAdapter extends BaseAdapter {
 
     private Context context;
     private static ArrayList<String> wordsArray;
     private static String[] valueET;
 
     // Constructor
-    public WordsAdapter(Context context, ArrayList<String> wordsArray) {
+    public ExercisesAdapter(Context context, ArrayList<String> wordsArray) {
         this.context = context;
         this.wordsArray = wordsArray;
     }
@@ -51,7 +51,7 @@ public class WordsAdapter extends BaseAdapter {
         if (view == null) {
             // Inflates the rows into the ListView
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.row, parent, false);
+            view = inflater.inflate(R.layout.row_exercises, parent, false);
         }
 
         // Sets the text of TextView to the word of the chosen language
