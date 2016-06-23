@@ -15,32 +15,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="44sp"
-        android:text="@string/WOTD"
-        android:id="@+id/wordText"
+        android:textSize="32sp"
+        android:text="@string/introduction"
+        android:id="@+id/introduction"
         android:textStyle="bold"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="32sp"
-        android:text="@string/translationHome"
-        android:id="@+id/translationText"
-        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="@string/introductionDescription"
+        android:id="@+id/introductionDescription"
         android:layout_marginTop="133dp"
-        android:layout_below="@+id/wordText"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="32sp"
-        android:text="@string/exampleHome"
-        android:id="@+id/exampleText"
-        android:textStyle="bold"
-        android:layout_marginTop="96dp"
-        android:layout_below="@+id/translationText"
+        android:layout_below="@+id/introduction"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
