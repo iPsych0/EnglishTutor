@@ -8,7 +8,8 @@
     <string name="Practise">Practise</string>
     <string name="wordLists">Your Word Lists</string>
     <string name="listTitle">Your word lists</string>
-    <string name="WOTD">Word of the day</string>
+    <string name="introduction">Welcome to MyEnglishTutor</string>
+    <string name="introductionDescription">Click the menu in the top-left to navigate through the app!</string>
     <string name="addDutchHint">Add Dutch word</string>
     <string name="addListTitle">Add name of list</string>
     <string name="addButton">Add</string>
