@@ -16,10 +16,9 @@ Finally, one of the features that will be available in the app is a program wher
 
 ## Technical description
 
-For this app, the following two API’s will be used:
-https://www.wordsapi.com/ and 
+For this app, the following API will be used:
 https://tech.yandex.com/dictionary/doc/dg/reference/lookup-docpage/ .
-Both API’s respond with JSON code which I can extract the information from that I want my users to be presented. The users will then be given the result of the query in a pretty-printed, readable fashion. 
+The API responds with JSON code which I can extract the information from that I want my users to be presented. The users will then be given the result of the query in a pretty-printed, readable fashion. 
 
 ## The app decomposed
 
