@@ -30,4 +30,56 @@ I finished writing my database. I want to add further functions to add and delet
 
 # Day 8
 
+Started writing my practise activity and set my adapter to the ListView. DBHelper classes weren't returning the right things yet.
 
+# Day 9
+
+Started fixing my DBHelper functions, spent all day to no avail yet, made small progress, but not quite there yet.
+
+# Day 10
+
+Demo on Friday
+
+# Day 11
+
+Got rid of the dialog interface to add lists and wrote the Java code for my NewList class and AddWords class. I've imported the DBHelper functions here and started working a bit more on my DBHelper functions now that I can actually see the results of my queries.
+
+# Day 12
+
+Worked on my DBHelper functions again. I can now return the list names to my adapter, so they can be displayed. Made an on-click listener on the list names to go to Exercises activity (which is still empty)
+
+# Day 13
+
+Finished my DBHelper functions completely! Adding words to the right lists now works! I can now add lists and add words.
+
+# Day 14
+
+Backtracked a bit to my dictionary activity. Started parsing my JSON. At the moment I only get the English synonym back, but I need to go into another JSONArray to get the translation and word type field.
+
+# Day 15
+
+Finished parsing JSON. My Dictionary activity is now completely done. Started working more on my Practise and Exercises activity. Added a long-click to delete a list from the ListView and the Database. Also implemented error catches in my EditText inputs.
+
+# Day 16
+
+Demo on Friday
+
+# Day 17
+
+Started doing the XML of my Exercises activity and writing some Java. Started a custom adapter names ExercisesAdapter. Currently experiencing some issues with printing the columns.
+
+# Day 18
+
+Found the issue in my custom adapter. I can now print the words and the EditTexts. Added a dialogue on-click to select whether the user wants to practise EN-NL or NL-EN. Words are printed out accordingly in the Exercises activity. Started writing a checkWords function that should compare the user input to the correct answer. Having difficulty retrieving the value from the EditTexts as the XML is not in my Exercises activity.
+
+# Day 19
+
+Googled for a solution and found that an "OnTextChangedListener" exists. Ran this through my custom adapter to retrieve the EditText values. Returning these to my Exercises activity now so I can compare the input to the correct answer. This function now fully works!
+
+# Day 20
+
+Decided to drop the "Word of the Day" class as I feel it does not align with my main app idea. Instead of this class, I created a new class that shows the user their completed word lists, as I had not implemented this yet. Created 2 new activities: One to show the user's lists, using a simple adapter and one to show the user the full words list, printed out in columns next to each other through a custom adapter. App is now fully working. Added an image of a book with a face to all my activities as "App mascotte", which is clickable to get tips about what to do in each activity. There is one bug left which I cannot fix, which is that I can enter words through my computer/emulator keyboard but not through my android software keyboard. Googling this provided literally no results and I am clueless as to how to fix this.
+
+# Day 21
+
+Final app presentation
