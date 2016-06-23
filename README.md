@@ -1,4 +1,4 @@
-# ProgrammeerProjectDaniel
+# ProgrammeerProjectDaniel © 2009 Daniel Oliemans
 
 ## App Concept
 
